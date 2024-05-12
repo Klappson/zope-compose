@@ -24,6 +24,8 @@ RUN pip3 install --break-system-packages psycopg2-binary \
 
 COPY fs/ /
 
+RUN pip3 install --break-system-packages /root/zopemods
+
 WORKDIR /root
 RUN mkwsgiinstance -u dockerzope:12345 -d wsgi
 
