@@ -15,7 +15,6 @@ volumes:
     name: "postgres-drive"
 
 services:
-  
   zeo:
     build: zeodbsync
     restart: always
@@ -27,7 +26,7 @@ services:
         target: /vol
     networks:
       - backend
-  
+
   postgres:
     image: postgres:latest
     restart: always
@@ -44,7 +43,7 @@ services:
       - postgres-drive:/vol
     networks:
       - backend
-  
+
   zope:
     build: zope
     restart: always
@@ -54,7 +53,7 @@ services:
       - type: bind
         source: ./mounts
         target: /vol
-  
+
   haproxy:
     build: haproxy
     restart: always
