@@ -24,6 +24,8 @@ def create_zope_objects():
     default_objects = "/root/default_zope_objects/"
     target_elements = [
         'composedb',
+        'request_init',
+        'request_end',
     ]
     changes = False
 
