@@ -1,4 +1,6 @@
 #! /bin/bash
 
+trap 'pkill haproxy' SIGTERM
 ip a
-haproxy -db -f /etc/haproxy/haproxy.cfg
+haproxy -db -f /etc/haproxy/haproxy.cfg &
+wait

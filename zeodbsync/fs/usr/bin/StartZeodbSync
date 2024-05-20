@@ -2,6 +2,7 @@
 import os
 import subprocess
 import klappson.dockerutils.dockerutils as utils
+import signal
 
 
 ZOPEREPO_PATH = "/vol/zoperepo"
@@ -44,6 +45,14 @@ def create_zope_objects():
             'zodbsync', 'playback', '--override' ,'/'])
 
 
+def shutdown_hook():
+    subprocess.run(['zeo/bin/zeoctl', 'stop'])
+    subprocess.run(['zodbsync', 'record'])
+    subprocess.run(['pkill', 'zodbsync'])
+    exit()
+
+
 if __name__ == '__main__':
+    signal.signal(signal.SIGTERM, shutdown_hook)
     setup.setup()
     create_zope_objects()

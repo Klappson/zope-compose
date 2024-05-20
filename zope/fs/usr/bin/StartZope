@@ -1,6 +1,8 @@
 #! /usr/bin/python3
 import os
 import klappson.dockerutils.dockerutils as utils
+import signal
+import subprocess
 
 WSGI_PATH = "/root/wsgi"
 ZOPEINI_PATH = os.path.join(WSGI_PATH, 'etc/zope.ini')
@@ -13,5 +15,10 @@ setup.programs = [
 
 setup.symlinks = setup.generate_userconfigs()
 
+def shutdown_hook():
+    subprocess.run(['pkill', 'runwsgi'])
+    exit()
+
 if __name__ == '__main__':
+    signal.signal(signal.SIGTERM, shutdown_hook)
     setup.setup()
