@@ -52,7 +52,9 @@ def protectedURLHandler(event):
         # For product instances we take the object itself.
         obj = event.request.PUBLISHED
 
-    if is_protected(obj):
+    protection_enabled = obj.getProperty('protectPythonScripts_', True)
+
+    if is_protected(obj) and protection_enabled:
         raise AccessControl.Unauthorized()
 
 
