@@ -6,6 +6,7 @@ RUN DEBIAN_FRONTEND=noninteractive TZ=Etc/UTC apt install \
     python3 \
     python3-pip \
     iproute2 \
+    procps \
     tree -y
 
 RUN pip3 install --break-system-packages Zope[wsgi]==5.9 -c https://zopefoundation.github.io/Zope/releases/5.9/constraints.txt

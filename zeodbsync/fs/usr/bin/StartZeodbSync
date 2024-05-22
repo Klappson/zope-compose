@@ -45,11 +45,10 @@ def create_zope_objects():
             'zodbsync', 'playback', '--override' ,'/'])
 
 
-def shutdown_hook():
+def shutdown_hook(signal, stack_frame):
     subprocess.run(['zeo/bin/zeoctl', 'stop'])
     subprocess.run(['zodbsync', 'record'])
     subprocess.run(['pkill', 'zodbsync'])
-    exit()
 
 
 if __name__ == '__main__':

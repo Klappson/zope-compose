@@ -15,9 +15,9 @@ setup.programs = [
 
 setup.symlinks = setup.generate_userconfigs()
 
-def shutdown_hook():
+def shutdown_hook(signal, stack_frame):
     subprocess.run(['pkill', 'runwsgi'])
-    exit()
+
 
 if __name__ == '__main__':
     signal.signal(signal.SIGTERM, shutdown_hook)
