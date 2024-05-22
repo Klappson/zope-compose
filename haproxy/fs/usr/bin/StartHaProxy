@@ -1,6 +1,11 @@
 #! /bin/bash
 
+set -m
+
 trap 'pkill haproxy' SIGTERM
 ip a
 haproxy -db -f /etc/haproxy/haproxy.cfg &
+sleep 10
+echo "Calling startup hook"
+curl -u dockerzope:12345 http://127.0.0.1/startup_hook
 wait

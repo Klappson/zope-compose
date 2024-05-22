@@ -27,6 +27,7 @@ def create_zope_objects():
         'composedb',
         'request_init',
         'request_end',
+        'startup_hook',
     ]
     changes = False
 

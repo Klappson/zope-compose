@@ -40,6 +40,5 @@ http://localhost:80
 ## To-Dos
 
 - Error-Handling
-- Startup-Hook
 - Background-Tasks
 - Low-/No-Code Tools
