@@ -4,6 +4,7 @@ import zope.event
 import types
 import AccessControl
 import logging
+import Products.zopemods as zopemods
 
 logger = logging.getLogger('Products.zopemods.protectedPythonScripts')
 protected_meta_types = [
@@ -53,7 +54,11 @@ def protectedURLHandler(event):
         obj = event.request.PUBLISHED
     
     try:
-        protection_enabled = obj.getProperty('protectPythonScripts_', True)
+        protection_enabled = zopemods.getContextProperty(
+            context=obj,
+            name='protectPythonScripts_',
+            default=True,
+        )
     except AttributeError:
         protection_enabled = False
 
