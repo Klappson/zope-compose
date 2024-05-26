@@ -1,11 +1,23 @@
-#! /bin/bash
+#! /usr/bin/python3
+import klappson.dockerutils.dockerutils as utils
+import signal
+import subprocess
+from time import sleep
 
-set -m
 
-trap 'pkill haproxy' SIGTERM
-ip a
-haproxy -db -f /etc/haproxy/haproxy.cfg &
-sleep 10
-echo "Calling startup hook"
-curl -u dockerzope:12345 http://127.0.0.1/startup_hook
-wait
+setup = utils.ContainerSetup("haproxy")
+setup.programs = [
+    ['haproxy', '-db', '-f', '/etc/haproxy/haproxy.cfg', ],
+]
+
+setup.symlinks = setup.generate_userconfigs()
+
+def shutdown_hook(signal, stack_frame):
+    subprocess.run(['pkill', 'haproxy'])
+
+
+if __name__ == '__main__':
+    signal.signal(signal.SIGTERM, shutdown_hook)
+    setup.setup()
+    sleep(10)
+    subprocess.run(['curl', '-u', 'dockerzope:12345', 'http://127.0.0.1/startup_hook'])

@@ -59,6 +59,10 @@ services:
     restart: always
     ports:
       - "0.0.0.0:80:80/tcp"
+    volumes:
+      - type: bind
+        source: ./mounts
+        target: /vol
     networks:
       - backend
       - host
